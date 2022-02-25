@@ -1,0 +1,108 @@
+<script setup>
+import { watch, ref } from "vue";
+
+const productList = ref("");
+const pagination = ref({
+  page: 0,
+  pageSize: 5,
+  totalElements: 1,
+  totalPage: 1,
+});
+
+let page = ref(1);
+const pageSize = ref(5);
+const totalElements = ref(10);
+const totalPage = ref(2);
+
+async function fetchData() {
+  productList.value = null;
+  //console.log("page: "+page.value)
+  const res = await fetch(
+    "http://localhost:8080/product/products?page=" +
+      (page.value) +
+      "&size=" +
+      pageSize.value,
+    {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+  let catalogRes = await res.json();
+  productList.value = catalogRes.data;
+  pagination.value = catalogRes.pagination;
+  page.value= catalogRes.pagination.page
+  totalElements.value = catalogRes.pagination.totalElements;
+  totalPage.value = catalogRes.pagination.totalPages;
+  pageSize.value = catalogRes.pagination.pageSize;
+
+  
+}
+
+function updatePage(value) {
+    const targetPage= value.target.innerText
+    console.log(targetPage)
+    if(targetPage=="‹"){
+        page.value = page.value-1;
+    }else if(targetPage=="›"){
+        page.value = page.value+1;
+    }else if(targetPage==="\u00AB"){
+        (page.value)=0
+    }else if(targetPage==="\u00BB"){
+        page.value = totalPage.value
+        console.log("total: "+totalPage.value)
+        console.log("page: "+page.value)
+    }else{
+        (page.value)=parseInt(targetPage)
+    }
+
+    fetchData()
+}
+
+fetchData();
+
+</script>
+
+<template>
+  <main>
+    <div class="row">
+      <div class="col">
+        <table id=mytable class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Kategori</th>
+              <th scope="col">Alt Kategori</th>
+              <th scope="col">Üretici Firma</th>
+              <th scope="col">Ürün Grubu</th>
+              <th scope="col">Ürün Tipi</th>
+              <th scope="col">Ürün Adı</th>
+              <th scope="col">Ürün Kodu</th>
+              <th scope="col">Boyut</th>
+              <th scope="col">Renk</th>
+              <th scope="col">Fiyat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="product in productList" :key="product.id">
+              <th scope="row">key</th>
+              <td>{{ product.category }}</td>
+              <td>{{ product.subCategory }}</td>
+              <td>{{ product.manufacturer }}</td>
+              <td>{{ product.productGroup }}</td>
+              <td>{{ product.productType }}</td>
+              <td>{{ product.productName }}</td>
+              <td>{{ product.productCode }}</td>
+              <td>{{ product.size }}</td>
+              <td>{{ product.color }}</td>
+              <td>{{ product.purchasePrice }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <b-pagination v-model="page" :total-rows="totalElements" :per-page="pageSize" aria-controls="my-table" @page-click="updatePage">
+        </b-pagination>
+        
+      </div>
+    </div>
+  </main>
+</template>
