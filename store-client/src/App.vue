@@ -12,6 +12,7 @@ import HelloWorld from "@/components/HelloWorld.vue";
 @import "@/assets/base.css";
 @import "@/assets/bootstrap.min.css";
 @import 'vue-select/dist/vue-select.css';
+@import "@vueform/multiselect/themes/default.css";
 
 #app {
   max-width: 1280px;

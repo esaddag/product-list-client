@@ -14,6 +14,10 @@ const pageSize = ref(5);
 const totalElements = ref(10);
 const totalPage = ref(2);
 
+const props = defineProps({
+  msg: String
+})
+
 async function fetchData() {
   productList.value = null;
   //console.log("page: "+page.value)
@@ -27,6 +31,17 @@ async function fetchData() {
       headers: { "Content-Type": "application/json" },
     }
   );
+
+  const res2 = await fetch(
+    "http://localhost:8080/product/search",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: {"productName":"p"}
+    }
+  );
+
+  console.log(props.msg)
   let catalogRes = await res.json();
   productList.value = catalogRes.data;
   pagination.value = catalogRes.pagination;
@@ -64,6 +79,7 @@ fetchData();
 
 <template>
   <main>
+     <h1>{{ msg }}</h1>
     <div class="row">
       <div class="col">
         <table id=mytable class="table table-striped">

@@ -7,12 +7,12 @@ const properties = ref({
   manufacturers: "",
   productGroups: "",
 });
-const category = ref();
+
 const filter = ref({
-  category: "",
-  subCategory: "",
-  manufacturer: "",
-  productGroup: "",
+  category: [],
+  subCategory: [],
+  manufacturer: [],
+  productGroup: [],
   productType: "",
   productName: "",
   productCode: "",
@@ -21,6 +21,9 @@ const filter = ref({
   minPrice: "",
   maxPrice: "",
 });
+
+const emit = defineEmits(["filter"])
+emit("filter", filter.value)
 
 async function fetchProperties() {
   const res = await fetch("http://localhost:8080/product/properties", {
@@ -46,7 +49,7 @@ fetchProperties();
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="inputCategory">Kategori</label>
-          <select
+          <!--<select
             v-model="filter.category"
             id="inputCategory"
             class="form-control"
@@ -56,11 +59,19 @@ fetchProperties();
               {{ category }}
             </option>
             <option>...</option>
-          </select>
+          </select>-->
+          <Multiselect
+        mode="tags"
+        :close-on-select="false"
+        :searchable="true"
+      v-model="filter.category"
+      :native="false"
+      :options="properties.categories"
+    />
         </div>
         <div class="form-group col-md-4">
           <label for="inputSubCategory">AltKategori</label>
-          <select
+          <!-- <select
             v-model="filter.subCategory"
             id="inputSubCategory"
             class="form-control"
@@ -72,11 +83,19 @@ fetchProperties();
             >
               {{ subCategory }}
             </option>
-          </select>
+          </select> -->
+          <Multiselect
+        mode="tags"
+        :close-on-select="false"
+        :searchable="true"
+      v-model="filter.subCategory"
+      :native="false"
+      :options="properties.subCategories"
+    />
         </div>
         <div class="form-group col-md-4">
           <label for="inputManufacturer">Üretici Firma</label>
-          <select
+          <!--<select
             v-model="filter.manufacturer"
             id="inputManufacturer"
             class="form-control"
@@ -88,13 +107,21 @@ fetchProperties();
             >
               {{ manufacturer }}
             </option>
-          </select>
+          </select>-->
+          <Multiselect
+        mode="tags"
+        :close-on-select="false"
+        :searchable="true"
+      v-model="filter.manufacturer"
+      :native="false"
+      :options="properties.manufacturers"
+    />
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="inputProductGroup">Ürün Grubu</label>
-          <select
+         <!-- <select
             v-model="filter.productGroup"
             id="inputProductGroup"
             class="form-control"
@@ -106,7 +133,15 @@ fetchProperties();
             >
               {{ productGroup }}
             </option>
-          </select>
+          </select>-->
+          <Multiselect
+        mode="tags"
+        :close-on-select="false"
+        :searchable="true"
+      v-model="filter.productGroup"
+      :native="false"
+      :options="properties.productGroups"
+    />
         </div>
         <div class="form-group col-md-4">
           <label for="inputProductType">Ürün Tipi</label>
@@ -133,7 +168,7 @@ fetchProperties();
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="inputProductCode">Ürün Kodu</label>
-          <input type="text" class="form-control" id="inputProductCode" />
+          <input v-model="filter.productCode" type="text" class="form-control" id="inputProductCode" />
         </div>
         <div class="form-group col-md-4">
           <label for="inputSize">Boyut</label>
