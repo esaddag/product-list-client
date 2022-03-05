@@ -4,7 +4,8 @@ import HelloWorld from "@/components/HelloWorld.vue";
 
 </script>
 
-<template>
+<template class="d-flex align-items-start">
+
   <RouterView />
 </template>
 
@@ -13,13 +14,17 @@ import HelloWorld from "@/components/HelloWorld.vue";
 @import "@/assets/bootstrap.min.css";
 @import 'vue-select/dist/vue-select.css';
 @import "@vueform/multiselect/themes/default.css";
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+
 
 #app {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 2rem;
-
+  min-height: inherit;
   font-weight: normal;
+  
 }
 
 header {

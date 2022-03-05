@@ -4,6 +4,8 @@ import router from "./router";
 import BootstrapVue3 from 'bootstrap-vue-3';
 import Pagination from 'v-pagination-3';
 import vSelect from "vue-select"
+import 'bootstrap'
+
 //import vueformConfig from './../vueform.config'
 import Multiselect from '@vueform/multiselect'
 
