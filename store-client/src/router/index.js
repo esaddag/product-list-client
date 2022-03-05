@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import CatalogView from "../views/CatalogView.vue";
+import LoginView from "../views/LoginView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,8 +23,17 @@ const router = createRouter({
       path: "/catalog",
       name: "catalog",
       component: CatalogView,
+      props: true
     },
+    {
+      path: "/login",
+      name: "login",
+      component: LoginView,
+      props: true
+    }
   ],
 });
 
+
 export default router;
+

@@ -28,13 +28,13 @@ async function fetchData() {
   productList.value = null;
   //console.log("page: "+page.value)
   const res = await fetch(
-    "http://localhost:8080/product/products?page=" +
+    "http://localhost:8081/product/products?page=" +
       (page.value) +
       "&size=" +
       pageSize.value,
     {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Authorization":"Bearer "+localStorage.getItem("access_token")},
     }
   );
 
@@ -135,6 +135,7 @@ watch(count, ()=>{
     <!-- <h1>{{ filterClick }}</h1> -->
     <div class="row">
       <div class="col">
+        
         <table id=mytable class="table table-striped">
           <thead>
             <tr>

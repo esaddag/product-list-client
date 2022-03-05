@@ -7,6 +7,7 @@ import { ref } from "vue";
 const filt = ref({});
 const filterC = ref();
 const cList = ref();
+
 </script>
 
 <template>

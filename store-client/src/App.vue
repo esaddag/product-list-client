@@ -82,9 +82,10 @@ nav a:first-of-type {
   }
 
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    /* display: grid;
+    grid-template-columns: 1fr 1fr; */
     padding: 0 2rem;
+    width: 90%;
   }
 
   header {
@@ -105,7 +106,7 @@ nav a:first-of-type {
 
   nav {
     text-align: left;
-    margin-left: -1rem;
+    
     font-size: 1rem;
 
     padding: 1rem 0;
