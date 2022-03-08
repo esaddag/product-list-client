@@ -8,7 +8,7 @@ import path from "path"
 export default defineConfig({
   plugins: [vue()],
   server: {
-    port: process.env.PORT
+    port: $PORT
   },
   resolve: {
     alias: {
