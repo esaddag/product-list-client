@@ -6,8 +6,6 @@ import router from "../router"
 const loginInfo = ref({"username":"", "password":""})  
 const tokens = ref()
 
-
-
 async function loginPost(){
   const data = new URLSearchParams();
   data.append("password", loginInfo.value.password);
