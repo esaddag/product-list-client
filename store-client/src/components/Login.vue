@@ -1,9 +1,13 @@
 <script setup>
 import Login from "@/components/Login.vue";
 import { ref } from "vue"
+import router from "../router"
 
 const loginInfo = ref({"username":"", "password":""})  
 const tokens = ref()
+
+
+
 async function loginPost(){
   const data = new URLSearchParams();
   data.append("password", loginInfo.value.password);
@@ -19,7 +23,9 @@ async function loginPost(){
   )
   tokens.value = await loginRes.json();
   console.log(tokens.value)
-  localStorage.setItem('access_token', JSON.stringify(tokens.value.access_token));
+  localStorage.setItem('access_token', tokens.value.access_token);
+  
+  router.push("/catalog")
 
   }
 
@@ -27,9 +33,9 @@ async function loginPost(){
 
 <template>
     <div class="row justify-content-center">
-      <div class="col-4 p-5 mt-5" style="background:azure">
+      <div class="col-md-4 p-5 mt-5" style="background:azure">
         <h1>Giriş</h1>
-        <form v-on:submit.prevent="loginPost">
+        <form v-on:submit.prevent="loginPost" >
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label"
               >Kullanıcı Adı</label

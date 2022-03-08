@@ -48,7 +48,7 @@ function removeFromCart(id){
           </thead>
           <tbody>
             <tr v-for="product in cartList" :key="product.id">
-              <th scope="row">key</th>
+              <th scope="row">{{product.id}}</th>
               <td>{{ product.category }}</td>
               <td>{{ product.subCategory }}</td>
               <td>{{ product.manufacturer }}</td>
