@@ -12,7 +12,7 @@ async function loginPost(){
   data.append("username", loginInfo.value.username);
 
    const loginRes = await fetch(
-    "http://localhost:8081/login",
+    "https://gulyaka-product-api.herokuapp.com/login",
     {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },

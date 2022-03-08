@@ -44,7 +44,7 @@ async function fetchData() {
   //console.log("page: "+page.value)
 
   const res = await fetch(
-    "http://localhost:8081/catalog/?page=" +
+    "https://gulyaka-product-api.herokuapp.com/catalog/?page=" +
       (page.value) +
       "&size=" +
       pageSize.value,
@@ -74,7 +74,7 @@ async function fetchData() {
 
 async function fetchFilteredData(){
    const filteredRes = await fetch(
-    "http://localhost:8081/catalog/?page=" +
+    "https://gulyaka-product-api.herokuapp.com/catalog/?page=" +
       (page.value) +
       "&size=" +
       pageSize.value,
