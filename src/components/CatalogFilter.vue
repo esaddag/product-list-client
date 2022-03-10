@@ -28,7 +28,7 @@ const filterClick = ref({count: 0});
 const emit = defineEmits(['filter', 'filterClick'])
 
 async function fetchProperties() {
-  const res = await fetch("https://gulyaka-product-api.herokuapp.com/catalog/properties", {
+  const res = await fetch(import.meta.env.VITE_API_ENDPOINT+"/catalog/properties", {
     method: "GET",
     headers: { "Content-Type": "application/json", "Authorization":"Bearer ".concat(localStorage.getItem("access_token"))},
   });

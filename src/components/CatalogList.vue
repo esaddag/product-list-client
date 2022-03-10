@@ -44,7 +44,7 @@ async function fetchData() {
   //console.log("page: "+page.value)
 
   const res = await fetch(
-    "https://gulyaka-product-api.herokuapp.com/catalog/?page=" +
+    import.meta.env.VITE_API_ENDPOINT+"/catalog/?page=" +
       (page.value) +
       "&size=" +
       pageSize.value,
@@ -73,8 +73,10 @@ async function fetchData() {
 }
 
 async function fetchFilteredData(){
+  
    const filteredRes = await fetch(
-    "https://gulyaka-product-api.herokuapp.com/catalog/?page=" +
+     
+    import.meta.env.VITE_API_ENDPOINT+"/catalog/?page=" +
       (page.value) +
       "&size=" +
       pageSize.value,
