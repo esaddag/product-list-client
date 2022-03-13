@@ -219,6 +219,7 @@ watch(sort, ()=>{console.log(sort.value)})
               <th scope="col">İşlemler</th>
               
             </tr>
+            
           </thead>
           <tbody>
             <tr v-for="product in productList" :key="product.id">
