@@ -3,87 +3,103 @@ import { watch, ref } from "vue";
 
 const props = defineProps(["cartList"]);
 const listSize = ref();
-
 const total_price = ref(0);
 
+
+// watch cart list and calculate total price for each item   
+// and list size for empty cart warning
 watch(props, () => {
-  total_price.value=0
+  total_price.value = 0;
   props.cartList.forEach((val) => {
-    
-    if(!val.count>0)
-    {val.count=1}
+    if (!val.count > 0) {
+      val.count = 1;
+    }
     total_price.value += Number(val.count * val.purchasePrice);
   });
 
   listSize.value = props.cartList.length;
 });
 
+
+// remove item from cart list by id
 function removeFromCart(id) {
-  // console.log(id)
   for (var i = 0; i < props.cartList.length; i++) {
     if (props.cartList[i].id === id) {
       props.cartList.splice(i, 1);
     }
   }
 }
+
+// add product manually
+// if price is null show warning
 let timeoutDuration;
-const manualProduct=ref({})
-function addManualProduct(){
-  
-  if(!manualProduct.value.purchasePrice){
-     timeoutDuration = 5000
-     document.getElementById("nullPriceAlert").style.opacity="100%"
-     setTimeout(()=>{document.getElementById("nullPriceAlert").style.opacity="0"}, timeoutDuration)
-     console.log(timeoutDuration)
-
+const manualProduct = ref({});
+function addManualProduct() {
+  if (!manualProduct.value.purchasePrice) {
+    timeoutDuration = 5000;
+    document.getElementById("nullPriceAlert").style.opacity = "100%";
+    setTimeout(() => {
+      document.getElementById("nullPriceAlert").style.opacity = "0";
+    }, timeoutDuration);
+    console.log(timeoutDuration);
+  } else {
+    const mp = JSON.parse(JSON.stringify(manualProduct.value));
+    props.cartList.push(mp);
+    console.log(timeoutDuration);
   }
-  else{
-const mp = JSON.parse(JSON.stringify(manualProduct.value)) 
-  props.cartList.push(mp)
-  console.log(timeoutDuration)
-  }
-  
 }
-
-function refreshManuelProduct(){
-  manualProduct.value={}
+// clear manu
+function refreshManualProduct() {
+  manualProduct.value = {};
 }
 </script>
 
 <template>
   <main>
-    <!-- <p>{{cartList}}</p>  -->
-<div class="row sticky-top" style="height:1px">
-  <div class="col-4"></div>
-  <div class="alert mt-5 ml-3 col-4  alert-danger alert-dismissible fade in " id="nullPriceAlert" role="alert">
-  <strong>Uyarı!</strong> Fiyat alanı boş olamaz!
-</div></div>
-    
+    <!-- manuaL PRODUCT PRICE ALERT [START] -->
+    <div class="row sticky-top" style="height: 1px">
+      <div class="col-4"></div>
+      <div
+        class="alert mt-5 ml-3 col-4 alert-danger alert-dismissible fade in"
+        id="nullPriceAlert"
+        role="alert"
+      >
+        <strong>Uyarı!</strong> Fiyat alanı boş olamaz!
+      </div>
+    </div>
+    <!-- manuaL PRODUCT PRICE ALERT [END] -->
+
+    <!-- EMPTY CART WARNING [START]-->
     <div v-if="listSize <= 0">
       <div class="alert alert-warning" role="alert">
         Sepetinizde ürün bulunmamaktadır!
       </div>
     </div>
+    <!-- EMPTY CART WARNING [END] -->
+
+    <!-- CART NOTE FIELD [START] -->
     <div class="card border-primary mb-3">
-      
       <div class="card-body text-primary">
         <h5 class="card-title">Notlar</h5>
-         <div class="form-group col">
-      <textarea class="form-control" aria-label="With textarea"></textarea>
-    </div>
+        <div class="form-group col">
+          <textarea class="form-control" aria-label="With textarea"></textarea>
+        </div>
       </div>
-     
     </div>
-    
+    <!-- CART NOTE FIELD [END] -->
+
+    <!-- CART TABLE [START] -->
     <div>
       <table id="mytable" class="table table-striped table-bordered w-auto">
         <thead>
-          <tr class="table-primary text-center"><th colspan="13">Manuel Ürün Ekleme</th></tr>
+          <!-- manuaL PRODUCT FIELD [START] -->
+          <tr class="table-primary text-center">
+            <th colspan="13">manual Ürün Ekleme</th>
+          </tr>
           <tr class="table-primary">
             <th scope="row"></th>
             <td>
               <div class="row">
-                <!-- <button type="button" class="btn btn-danger"><i class="bi bi-dash-square"></i></button> -->
                 <div class="col">
                   <input
                     type="text"
@@ -97,7 +113,6 @@ function refreshManuelProduct(){
             </td>
             <td>
               <div class="row">
-                <!-- <button type="button" class="btn btn-danger"><i class="bi bi-dash-square"></i></button> -->
                 <div class="col">
                   <input
                     type="text"
@@ -111,7 +126,6 @@ function refreshManuelProduct(){
             </td>
             <td>
               <div class="row">
-                <!-- <button type="button" class="btn btn-danger"><i class="bi bi-dash-square"></i></button> -->
                 <div class="col">
                   <input
                     type="text"
@@ -125,7 +139,6 @@ function refreshManuelProduct(){
             </td>
             <td>
               <div class="row">
-                <!-- <button type="button" class="btn btn-danger"><i class="bi bi-dash-square"></i></button> -->
                 <div class="col">
                   <input
                     type="text"
@@ -139,7 +152,6 @@ function refreshManuelProduct(){
             </td>
             <td>
               <div class="row">
-                <!-- <button type="button" class="btn btn-danger"><i class="bi bi-dash-square"></i></button> -->
                 <div class="col">
                   <input
                     type="text"
@@ -153,7 +165,6 @@ function refreshManuelProduct(){
             </td>
             <td>
               <div class="row">
-                <!-- <button type="button" class="btn btn-danger"><i class="bi bi-dash-square"></i></button> -->
                 <div class="col">
                   <input
                     type="text"
@@ -167,7 +178,6 @@ function refreshManuelProduct(){
             </td>
             <td>
               <div class="row">
-                <!-- <button type="button" class="btn btn-danger"><i class="bi bi-dash-square"></i></button> -->
                 <div class="col">
                   <input
                     type="text"
@@ -181,7 +191,6 @@ function refreshManuelProduct(){
             </td>
             <td>
               <div class="row">
-                <!-- <button type="button" class="btn btn-danger"><i class="bi bi-dash-square"></i></button> -->
                 <div class="col">
                   <input
                     type="text"
@@ -195,7 +204,6 @@ function refreshManuelProduct(){
             </td>
             <td>
               <div class="row">
-                <!-- <button type="button" class="btn btn-danger"><i class="bi bi-dash-square"></i></button> -->
                 <div class="col">
                   <input
                     type="text"
@@ -209,7 +217,6 @@ function refreshManuelProduct(){
             </td>
             <td>
               <div class="row">
-                <!-- <button type="button" class="btn btn-danger"><i class="bi bi-dash-square"></i></button> -->
                 <div class="col">
                   <input
                     type="number"
@@ -223,9 +230,7 @@ function refreshManuelProduct(){
               </div>
             </td>
             <td>
-               <div class="row justify-content-center">
-                <!-- <button type="button" class="btn btn-danger"><i class="bi bi-dash-square"></i></button> -->
-                
+              <div class="row justify-content-center">
                 <button
                   type="button"
                   id="removeBtn"
@@ -237,7 +242,7 @@ function refreshManuelProduct(){
                 <button
                   type="button"
                   id="removeBtn"
-                  @click="refreshManuelProduct()"
+                  @click="refreshManualProduct()"
                   class="btn btn-info ml-1"
                 >
                   <i class="bi bi-arrow-clockwise"></i>
@@ -247,9 +252,14 @@ function refreshManuelProduct(){
             </td>
             <td></td>
           </tr>
-          <tr><th></th></tr>
+          <tr>
+            <th></th>
+          </tr>
+          <!-- manuaL PRODUCT FIELD [END] -->
+
+          <!-- CART TABLE CONTENT FIELD [START] -->
           <tr class="thead-dark">
-            <th style="max-width:20px" scope="col">#</th>
+            <th style="max-width: 20px" scope="col">#</th>
             <th scope="col">Kategori</th>
             <th scope="col">Alt Kategori</th>
             <th scope="col">Üretici Firma</th>
@@ -260,10 +270,9 @@ function refreshManuelProduct(){
             <th scope="col">Boyut</th>
             <th scope="col">Renk</th>
             <th scope="col">Adet Fiyat</th>
-            <th style="min-width:120px" scope="col">Adet</th>
+            <th style="min-width: 120px" scope="col">Adet</th>
             <th scope="col">Toplam</th>
           </tr>
-          
         </thead>
         <tbody>
           <tr v-for="product in cartList" :key="product.id">
@@ -281,7 +290,6 @@ function refreshManuelProduct(){
             <!-- <td><button @click="addToCart(product)" type="button" class="btn btn-primary"><i class="far fa-eye">sepetten çıkar</i></button></td> -->
             <td>
               <div class="row justify-content-center">
-                <!-- <button type="button" class="btn btn-danger"><i class="bi bi-dash-square"></i></button> -->
                 <input
                   style="width: 60px"
                   type="number"
@@ -305,18 +313,20 @@ function refreshManuelProduct(){
             <td>{{ product.purchasePrice }}</td>
           </tr>
           <tr class="table-warning">
-            <th class="text-right" colspan="12" scope="row"><h4>SEPET TOPLAM</h4></th>
-            <td><h4>{{ total_price }}</h4></td>
+            <th class="text-right" colspan="12" scope="row">
+              <h4>SEPET TOPLAM</h4>
+            </th>
+            <td>
+              <h4>{{ total_price }}</h4>
+            </td>
           </tr>
         </tbody>
+        <!-- CART TABLE CONTENT FIELD [END] -->
       </table>
     </div>
-    
+    <!-- CART TABLE [END] -->
   </main>
 </template>
 
 <style>
-
-
-
 </style>

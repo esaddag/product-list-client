@@ -10,7 +10,7 @@ const properties = ref({
 
 
 const filter = ref({
-  category: [],
+  category: "",
   subCategory: "",
   manufacturer: "",
   productGroup: "",
@@ -75,7 +75,7 @@ fetchProperties();
                     <option>...</option>
                   </select>-->
                   <Multiselect
-                mode="tags"
+                mode="single"
                 :close-on-select="true"
                 :searchable="true"
               v-model="filter.category"

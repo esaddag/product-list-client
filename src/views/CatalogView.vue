@@ -18,7 +18,10 @@ const cList = ref();
           class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark m-0"
         >
           <div class="container-fluid">
-            <a class="navbar-brand" href="#">Brand</a>
+            <a class="navbar-brand" href="#">
+              <img src="../assets/gulyakalogo.png"  height="40" class="d-inline-block align-top" alt="">
+              
+            </a>
             <form class="d-flex justify-content-evenly">
               <button
                 class="btn btn-info m-1"
