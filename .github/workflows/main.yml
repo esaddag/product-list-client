@@ -2,7 +2,7 @@ name: Deploy AWS EC2
 on:
   push:
     branches:
-      - main
+      - master
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -41,8 +41,8 @@ jobs:
             rm -rf /home/ubuntu/catalog-api
             git clone https://github.com/esaddag/catalog-api.git
             cd catalog-api
-            git checkout main
-            git pull origin main
+            git checkout master
+            git pull origin master
             sudo chmod +x ./deploy.sh
             ./deploy.sh
           '
