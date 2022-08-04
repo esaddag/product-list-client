@@ -25,7 +25,7 @@ sudo systemctl restart nginx
 sudo docker build -f Dockerfile -t catalog_app:latest .
 
 # run in detached mode
-sudo docker run -p 8080:8081 -d catalog_app:latest
+sudo docker run -p 8080:3000 -d catalog_app:latest
 
 sleep 15
 
