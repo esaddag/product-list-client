@@ -3,22 +3,21 @@ import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "@/components/HelloWorld.vue";
 import "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js";
 import "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js";
-
+import { ref } from "vue";
+import Datepicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 </script>
 
 <template class="d-flex align-items-start">
-  
   <RouterView />
 </template>
 
 <style>
 @import "@/assets/base.css";
 @import "@/assets/bootstrap.min.css";
-@import 'vue-select/dist/vue-select.css';
+@import "vue-select/dist/vue-select.css";
 @import "@vueform/multiselect/themes/default.css";
-@import 'bootstrap-icons/font/bootstrap-icons.css';
-
-
+@import "bootstrap-icons/font/bootstrap-icons.css";
 
 #app {
   max-width: 100%;
@@ -26,7 +25,6 @@ import "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
   padding: 2rem;
   min-height: inherit;
   font-weight: normal;
-  
 }
 
 header {
@@ -108,7 +106,7 @@ nav a:first-of-type {
 
   nav {
     text-align: left;
-    
+
     font-size: 1rem;
 
     padding: 1rem 0;

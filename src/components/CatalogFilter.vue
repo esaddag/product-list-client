@@ -4,66 +4,86 @@ import { watch, ref } from "vue";
 const properties = ref({
   categories: "",
   subCategories: "",
-  manufacturers: "",
+  brands: "",
   productGroups: "",
+  productNames: "",
+  productCodes: "",
+  sizes: "",
 });
-
 
 const filter = ref({
   category: "",
   subCategory: "",
-  manufacturer: "",
+  brand: "",
   productGroup: "",
-  productType: "",
   productName: "",
-  productCode: "",
   size: "",
-  color: "",
-  minPrice: "",
-  maxPrice: "",
 });
 
-const filterClick = ref({count: 0});
+const filterClick = ref({ count: 0 });
 
-const emit = defineEmits(['filter', 'filterClick'])
+const emit = defineEmits(["filter", "filterClick"]);
 
 async function fetchProperties() {
-  const res = await fetch(import.meta.env.VITE_API_ENDPOINT+"/catalog/properties", {
-    method: "GET",
-    headers: { "Content-Type": "application/json", "Authorization":"Bearer ".concat(localStorage.getItem("access_token"))},
-  });
+  const res = await fetch(
+    import.meta.env.VITE_API_ENDPOINT + "/catalog/filters",
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer ".concat(localStorage.getItem("access_token")),
+      },
+    }
+  );
   let propertiesRes = await res.json();
-  properties.value.categories = propertiesRes[0];
-  properties.value.subCategories = propertiesRes[1];
-  properties.value.manufacturers = propertiesRes[2];
-  properties.value.productGroups = propertiesRes[3];
+  properties.value.categories = propertiesRes.categories;
+  properties.value.subCategories = propertiesRes.subCategories;
+  properties.value.brands = propertiesRes.brands;
+  properties.value.sizes = propertiesRes.sizes;
+  properties.value.productGroups = propertiesRes.productGroups;
+  console.log(properties);
 }
 
 function submit() {
   //console.log(filter.value);
   filterClick.value.count++;
   //console.log(filterClick.value.count)
-
 }
-emit("filter", filter.value)
-emit("filterClick", filterClick.value )
+
+/* function clearFilter() {
+  let filterList = document.getElementsByClassName("filter-form").;
+  filterList.forEach((element) => {
+    element.reset();
+  });
+} */
+
+emit("filter", filter.value);
+emit("filterClick", filterClick.value);
 fetchProperties();
 </script>
 <template>
   <main class="pt-1">
-
-    <div class="accordion" style="background:azure;" id="accordionExample">
-  <div class="accordion-item">
-    <h2 class="accordion-header" style="background:azure;" id="headingOne">
-      
-    </h2>
-    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-      <div class="accordion-body" >
-        <form v-on:submit.prevent="submitForm">
+    <div class="accordion" style="background: azure" id="accordionExample">
+      <div class="accordion-item">
+        <h2
+          class="accordion-header"
+          style="background: azure"
+          id="headingOne"
+        ></h2>
+        <div
+          id="collapseOne"
+          class="accordion-collapse collapse show"
+          aria-labelledby="headingOne"
+          data-bs-parent="#accordionExample"
+        >
+          <div class="accordion-body">
+            <form v-on:submit.prevent="submitForm">
               <div class="form-row">
-                <div class="form-group col-md-4">
-                  <label for="inputCategory">Kategori</label>
-                  <!--<select
+                <div class="col-6">
+                  <div class="form-row">
+                    <div class="form-group col-md-3">
+                      <label for="inputCategory">Kategori</label>
+                      <!--<select
                     v-model="filter.category"
                     id="inputCategory"
                     class="form-control"
@@ -74,118 +94,136 @@ fetchProperties();
                     </option>
                     <option>...</option>
                   </select>-->
-                  <Multiselect
-                mode="single"
-                :close-on-select="true"
-                :searchable="true"
-              v-model="filter.category"
-              :native="false"
-              :options="properties.categories"
-            />
+                      <Multiselect
+                        mode="single"
+                        :close-on-select="true"
+                        :searchable="true"
+                        v-model="filter.category"
+                        :native="false"
+                        :options="properties.categories"
+                        class="filter-form-input"
+                      />
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="inputSubCategory">AltKategori</label>
+                      <Multiselect
+                        mode="single"
+                        :close-on-select="true"
+                        :searchable="true"
+                        v-model="filter.subCategory"
+                        :native="false"
+                        :options="properties.subCategories"
+                      />
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="inputManufacturer">Firma</label>
+                      <Multiselect
+                        mode="single"
+                        :close-on-select="true"
+                        :searchable="true"
+                        v-model="filter.brand"
+                        :native="false"
+                        :options="properties.brands"
+                      />
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="inputProductGroup">Ürün Grubu</label>
+                      <Multiselect
+                        mode="single"
+                        :close-on-select="true"
+                        :searchable="true"
+                        v-model="filter.productGroup"
+                        :native="false"
+                        :options="properties.productGroups"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group col-md-4">
-                  <label for="inputSubCategory">AltKategori</label>
-                  <!-- <select
-                    v-model="filter.subCategory"
-                    id="inputSubCategory"
-                    class="form-control"
-                  >
-                    <option selected>Seçiniz...</option>
-                    <option
-                      v-for="subCategory in properties.subCategories"
-                      :key="subCategory"
+                <div class="col-6">
+                  <div class="form-row">
+                    <div class="form-group col-md-3">
+                      <label for="inputProductSize">Ölçü</label>
+                      <Multiselect
+                        mode="single"
+                        :close-on-select="true"
+                        :searchable="true"
+                        v-model="filter.size"
+                        :native="false"
+                        minChars="1"
+                        :options="properties.sizes"
+                      />
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="inputProductName">Ürün Adı</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="filter.productName"
+                        id="inputProductName"
+                        placeholder=""
+                      />
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="inputProductCode">Ürün Kodu</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="filter.productCode"
+                        id="inputProductName"
+                        placeholder=""
+                      />
+                    </div>
+                    <div
+                      class="
+                        form-group
+                        col-md-2
+                        d-flex
+                        align-items-end
+                        justify-content-center
+                      "
                     >
-                      {{ subCategory }}
-                    </option>
-                  </select> -->
-                  <Multiselect
-                mode="single"
-                :close-on-select="true"
-                :searchable="true"
-              v-model="filter.subCategory"
-              :native="false"
-              :options="properties.subCategories"
-            />
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="inputManufacturer">Üretici Firma</label>
-                  <!--<select
-                    v-model="filter.manufacturer"
-                    id="inputManufacturer"
-                    class="form-control"
-                  >
-                    <option selected>Seçiniz...</option>
-                    <option
-                      v-for="manufacturer in properties.manufacturers"
-                      :key="manufacturer"
+                      <button
+                        type="submit"
+                        @click="submit"
+                        class="btn btn-primary flex-grow-1"
+                      >
+                        Filtrele <i class="bi bi-filter"></i>
+                      </button>
+                    </div>
+                    <!-- <div //todo: add clear filter feature
+                      class="
+                        form-group
+                        col-md-1
+                        d-flex
+                        align-items-end
+                        justify-content-center
+                      "
+                      style="padding-left: 0; margin-left: 0 !important"
                     >
-                      {{ manufacturer }}
-                    </option>
-                  </select>-->
-                  <Multiselect
-                mode="single"
-                :close-on-select="true"
-                :searchable="true"
-              v-model="filter.manufacturer"
-              :native="false"
-              :options="properties.manufacturers"
-            />
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-4">
-                  <label for="inputProductGroup">Ürün Grubu</label>
-                <!-- <select
-                    v-model="filter.productGroup"
-                    id="inputProductGroup"
-                    class="form-control"
-                  >
-                    <option selected>Seçiniz...</option>
-                    <option
-                      v-for="productGroup in properties.productGroups"
-                      :key="productGroup"
-                    >
-                      {{ productGroup }}
-                    </option>
-                  </select>-->
-                  <Multiselect
-                mode="single"
-                :close-on-select="true"
-                :searchable="true"
-              v-model="filter.productGroup"
-              :native="false"
-              :options="properties.productGroups"
-            />
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="inputProductType">Ürün Tipi</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="filter.productType"
-                    id="inputProductType"
-                    placeholder=""
-                  />
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="inputProductName">Ürün Adı</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="filter.productName"
-                    id="inputProductName"
-                    placeholder=""
-                  />
+                      <button
+                        type="submit"
+                        @click="clearFilter"
+                        class="btn btn-danger flex-grow-1"
+                      >
+                        <i class="bi bi-x-circle"></i>
+                      </button>
+                    </div>  -->
+                  </div>
                 </div>
               </div>
 
-              <div class="form-row">
+              <!-- <div class="form-row">
                 <div class="form-group col-md-4">
                   <label for="inputProductCode">Ürün Kodu</label>
-                  <input v-model="filter.productCode" type="text" class="form-control" id="inputProductCode" />
+                  <input
+                    v-model="filter.productCode"
+                    type="text"
+                    class="form-control"
+                    id="inputProductCode"
+                  />
                 </div>
                 <div class="form-group col-md-4">
-                  <label for="inputSize">Boyut</label>
+                  <label for="inputSize">Ölçü</label>
                   <input
                     type="text"
                     class="form-control"
@@ -203,9 +241,9 @@ fetchProperties();
                     id="inputColor"
                   />
                 </div>
-              </div>
+              </div> -->
               <div class="form-row">
-                <div class="form-group col-md-4">
+                <!-- <div class="form-group col-md-4">
                   <label for="inputMinFiyat">Min Fiyat</label>
                   <input
                     type="number"
@@ -224,20 +262,12 @@ fetchProperties();
                     id="inputMaxFiyat"
                     placeholder=""
                   />
-                </div>
-                
-                <div class=" form-group col-md-4 d-flex align-items-end justify-content-center">
-                  <button type="submit" @click="submit" class="btn btn-primary flex-grow-1">
-                Filtrele <i class="bi bi-filter"></i>
-              </button></div>
+                </div> -->
               </div>
-              
-        </form>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-    </div>
-
-   
   </main>
 </template>
