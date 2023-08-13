@@ -250,11 +250,11 @@ watch(sort, () => {
               <th scope="row">{{ product.id }}</th>
               <td>{{ product.category }}</td>
               <td>{{ product.subCategory }}</td>
-              <td>{{ product.brand }}</td>
-              <td>{{ product.productGroup }}</td>
-              <td>{{ product.productName }}</td>
-              <td>{{ product.productCode }}</td>
-              <td>{{ product.productSize }}</td>
+              <td>{{ product.brand.name }}</td>
+              <td>{{ product.grup }}</td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.code }}</td>
+              <td>{{ product.purchasePrice}}</td>
               <td>{{ product.cashPrice }}</td>
               <td>{{ product.cardPrice }}</td>
               <td>

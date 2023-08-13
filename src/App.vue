@@ -15,7 +15,6 @@ import "@vuepic/vue-datepicker/dist/main.css";
 <style>
 @import "@/assets/base.css";
 @import "@/assets/bootstrap.min.css";
-@import "vue-select/dist/vue-select.css";
 @import "@vueform/multiselect/themes/default.css";
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
